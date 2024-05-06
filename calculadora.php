@@ -25,51 +25,61 @@
         <label for="">Numero 2: </label>
         <input type="text" name="y" id="">
 
-
         <input type="submit" value="Calcular">
-
-        <br><br>
-
     </form>
 
     <?php
-
+    session_start();
 
     include "funcoes.php";
 
-    $x = $_POST["x"];
-    $y = $_POST["y"];
-    $operacao = $_POST["operacao"];
-    $resposta;
+    if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['operacao'])) {
+        $x = $_POST["x"];
+        $y = $_POST["y"];
+        $operacao = $_POST["operacao"];
+        $resposta;
 
-    if (isset($_POST['x']) && isset($_POST['y'])) {
-        switch ($operacao){
-            case ("+"):
+        switch ($operacao) {
+            case "+":
                 $resposta = $x . " + " . $y . " = " . somar($x, $y);
                 break;
-            case ("-"):
+            case "-":
                 $resposta = $x . " - " . $y . " = " . subtrair($x, $y);
                 break;
-            case ("*"):
+            case "*":
                 $resposta = $x . " * " . $y . " = " . multiplicar($x, $y);
                 break;
-            case ("/"):
+            case "/":
                 $resposta = $x . " / " . $y . " = " . dividir($x, $y);
                 break;
-            case ("^"):
+            case "^":
                 $resposta = $x . "^" . $y . " = " . potencia($x, $y);
                 break;
-            case ("!n"):
+            case "!n":
                 $resposta = "!n" . $x . " = " . fatorial($x);
                 break;
         }
+
+        if (isset($resposta)) {
+            echo "<label for='resultado'>Resultado:</label>";
+            echo "<input type='text' id='resultado' value='$resposta' readonly>";
+            echo '<form action="calculadora.php" method="POST">';
+            echo "<input type='hidden' name='resultado' value='$resposta'>";
+            echo "<button type='submit' name='salvar' value='salvar'>Salvar</button>";
+            echo "<button type='submit' name='resgatar' value='resgatar'>Resgatar</button>";
+            echo '</form>';
+        }
     }
 
-    if (isset($resposta)) {
-        echo "<label for='resultado'>Resultado:</label>";
-        echo "<input type='text' id='resultado' value='$resposta' readonly>";
+    if (isset($_POST['salvar'])) {
+        $_SESSION['resultado_salvo'] = $_POST['resultado'];
     }
-
+    
+    if (isset($_POST['resgatar']) && isset($_SESSION['resultado_salvo'])) {
+        $resposta = $_SESSION['resultado_salvo'];
+        echo "<label for='resultado_salvo'>Resultado Salvo:</label>";
+        echo "<input type='text' id='resultado_salvo' value='$resposta' readonly>";
+    }
 
     ?>
 </body>
