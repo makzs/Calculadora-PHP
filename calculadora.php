@@ -27,6 +27,9 @@
         <input type="text" name="y" id="">
 
         <input type="submit" value="Calcular">
+        <button type="submit" name="limpar_historico" value="limpar">Limpar Histórico</button>
+</form>
+
     </form>
 
     <?php
@@ -103,6 +106,10 @@
         echo "<label for='resultado_salvo'>Resultado Salvo:</label>";
         echo "<input type='text' id='resultado_salvo' value='$resposta' readonly>";
     }
+    
+    if(isset($_POST['limpar_historico'])) {
+        unset($_SESSION['historico']);
+    }
 
     if (isset($_SESSION['historico'])) {
         echo "<h2>Histórico de Resultados:</h2>";
@@ -110,6 +117,8 @@
             echo "<p>$resultado</p>";
         }
     }
+    
+    
 
 
     ?>
