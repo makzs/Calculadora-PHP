@@ -68,6 +68,28 @@
             echo "<button type='submit' name='salvar' value='salvar'>Salvar</button>";
             echo "<button type='submit' name='resgatar' value='resgatar'>Resgatar</button>";
             echo '</form>';
+            echo '<form action="calculadora.php" method="POST">';
+            echo "<input type='hidden' name='resultado' value='$resposta'>";
+            echo "<button type='submit' name='memoria' value='memoria'>M</button>";
+            echo '</form>';
+
+            if (!isset($_SESSION['historico'])) {
+                $_SESSION['historico'] = array();
+            }
+            array_push($_SESSION['historico'], $resposta);
+        }
+    }
+
+    if (isset($_POST['memoria'])){
+        if (!isset($_SESSION['memoriaSalva'])){
+            $_SESSION['memoriaSalva'] = $_POST['resultado'];
+
+        }
+        else{
+            $resposta = $_SESSION['memoriaSalva'];
+            echo "<label for='memoriaSalva'>Memoria Salva:</label>";
+            echo "<input type='text' id='memoriaSalva' value='$resposta' readonly>";
+            $_SESSION['memoriaSalva'] = null;
         }
     }
 
@@ -80,6 +102,14 @@
         echo "<label for='resultado_salvo'>Resultado Salvo:</label>";
         echo "<input type='text' id='resultado_salvo' value='$resposta' readonly>";
     }
+
+    if (isset($_SESSION['historico'])) {
+        echo "<h2>Histórico de Resultados:</h2>";
+        foreach ($_SESSION['historico'] as $resultado) {
+            echo "<p>$resultado</p>";
+        }
+    }
+
 
     ?>
 </body>
