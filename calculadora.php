@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
     <title>Calculadora PHP</title>
 </head>
 <body>
@@ -65,12 +66,12 @@
             echo "<input type='text' id='resultado' value='$resposta' readonly>";
             echo '<form action="calculadora.php" method="POST">';
             echo "<input type='hidden' name='resultado' value='$resposta'>";
-            echo "<button type='submit' name='salvar' value='salvar'>Salvar</button>";
-            echo "<button type='submit' name='resgatar' value='resgatar'>Resgatar</button>";
+            echo "<button class='botao-container' type='submit' name='salvar' value='salvar'>Salvar</button>";
+            echo "<button class='botao-container' type='submit' name='resgatar' value='resgatar'>Resgatar</button>";
             echo '</form>';
             echo '<form action="calculadora.php" method="POST">';
             echo "<input type='hidden' name='resultado' value='$resposta'>";
-            echo "<button type='submit' name='memoria' value='memoria'>M</button>";
+            echo "<button class='botao-container' type='submit' name='memoria' value='memoria'>M</button>";
             echo '</form>';
 
             if (!isset($_SESSION['historico'])) {
